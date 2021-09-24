@@ -11,7 +11,7 @@ namespace Kraken.Net.Converters
     {
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var data = (KrakenDictionaryResult<T>) value;
+            var data = (KrakenDictionaryResult<T>)value;
             writer.WriteStartObject();
             writer.WritePropertyName("data");
             writer.WriteRawValue(JsonConvert.SerializeObject(data.Data));

@@ -732,7 +732,7 @@ namespace Kraken.Net
             return ticker.As<IEnumerable<ICommonTicker>>(ticker.Data?.Select(d => d.Value));
         }
 
-        async Task<WebCallResult<IEnumerable<ICommonKline>>> IExchangeClient.GetKlinesAsync(string symbol, TimeSpan timespan, DateTime? startTime = null, DateTime? endTime = null, int? limit = null)
+        async Task<WebCallResult<IEnumerable<ICommonKline>>> IExchangeClient.GetKlinesAsync(string symbol, TimeSpan timespan, DateTime? startTime, DateTime? endTime, int? limit)
         {
             if(endTime != null)
                 return WebCallResult<IEnumerable<ICommonKline>>.CreateErrorResult(new ArgumentError(
@@ -763,7 +763,7 @@ namespace Kraken.Net
             return tradesResult.As<IEnumerable<ICommonRecentTrade>>(tradesResult.Data?.Data);
         }
 
-        async Task<WebCallResult<ICommonOrderId>> IExchangeClient.PlaceOrderAsync(string symbol, IExchangeClient.OrderSide side, IExchangeClient.OrderType type, decimal quantity, decimal? price = null, string? accountId = null)
+        async Task<WebCallResult<ICommonOrderId>> IExchangeClient.PlaceOrderAsync(string symbol, IExchangeClient.OrderSide side, IExchangeClient.OrderType type, decimal quantity, decimal? price, string? accountId)
         {
             var result = await PlaceOrderAsync(symbol, GetOrderSide(side), GetOrderType(type), quantity, price: price).ConfigureAwait(false);
             return result.As<ICommonOrderId>(result.Data);
@@ -775,7 +775,7 @@ namespace Kraken.Net
             return result.As<ICommonOrder> (result.Data?.FirstOrDefault().Value);
         }
 
-        async Task<WebCallResult<IEnumerable<ICommonTrade>>> IExchangeClient.GetTradesAsync(string orderId, string? symbol = null)
+        async Task<WebCallResult<IEnumerable<ICommonTrade>>> IExchangeClient.GetTradesAsync(string orderId, string? symbol)
         {
             var result = await GetUserTradesAsync().ConfigureAwait(false);
             return result.As<IEnumerable<ICommonTrade>>(result.Data?.Trades.Where(t => t.Value.OrderId == orderId).Select(o => (ICommonTrade)o.Value));
@@ -802,7 +802,7 @@ namespace Kraken.Net
             return result.As<ICommonOrderId>(result? new KrakenOrder(){ ReferenceId  = result.Data.Pending.First().ToString() } : null);
         }
 
-        async Task<WebCallResult<IEnumerable<ICommonBalance>>> IExchangeClient.GetBalancesAsync(string? accountId = null)
+        async Task<WebCallResult<IEnumerable<ICommonBalance>>> IExchangeClient.GetBalancesAsync(string? accountId)
         {
             var result = await GetBalancesAsync().ConfigureAwait(false);
             return result.As<IEnumerable<ICommonBalance>>(result.Data?.Select(d => new KrakenBalance() { Asset = d.Key, Balance = d.Value}));
