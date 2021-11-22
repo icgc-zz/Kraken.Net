@@ -6,9 +6,9 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
 using Newtonsoft.Json;
 
-namespace Kucoin.Net.UnitTests.TestImplementations
+namespace Kraken.Net.UnitTests.TestImplementations
 {
-    public class TestSocket: IWebsocket
+    public class TestSocket : IWebsocket
     {
         public bool CanConnect { get; set; }
         public bool Connected { get; set; }
@@ -36,6 +36,8 @@ namespace Kucoin.Net.UnitTests.TestImplementations
         public bool Reconnecting { get; set; }
         public int? RatelimitPerSecond { get; set; }
         public string? LastSendMessage { get; set; }
+
+        double IWebsocket.IncomingKbps => throw new NotImplementedException();
 
         public Task<bool> ConnectAsync()
         {

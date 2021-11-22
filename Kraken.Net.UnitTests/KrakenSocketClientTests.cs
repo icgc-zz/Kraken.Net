@@ -1,6 +1,5 @@
 ﻿using CryptoExchange.Net;
 using Kraken.Net.UnitTests.TestImplementations;
-using Kucoin.Net.UnitTests.TestImplementations;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Threading.Tasks;

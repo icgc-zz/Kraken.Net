@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Kraken.Net.Converters;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
